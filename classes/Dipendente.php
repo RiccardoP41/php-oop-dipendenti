@@ -13,42 +13,65 @@ class Dipendente{
     public function __construct($_nome,$_cognome,$_codiceFiscale,$_matricola, $_stipendioAnnuoLordo,$_visitaMedica){
         if ($_visitaMedica == "Y") {
             $this->doneVisitaMedica($_visitaMedica);
+        }   else {
+            throw new Exception("$_nome $_cognome non ha ancora fatto la visita medica");
         }
-        if ($this->visitaMedica == false) {
-            echo "non ha ancora fatto la visita medica";
+        // if ($this->visitaMedica == false) {
+        //     echo "<br> non ha ancora fatto la visita medica";
+        // }
+
+        if (!empty($_nome)) {
+            $this->nome = $_nome;
+        }else {
+            throw new Exception("Non hai inserito il nome");
         }
-        if (empty($_nome)) {
-            die("Non hai inserito il nome");
+
+        if (!empty($_cognome)) {
+            $this->cognome = $_cognome;
+        }else {
+            throw new Exception("Non hai inserito il cognome");
         }
-        $this->nome = $_nome;
-        if (empty($_cognome)) {
-            die("Non hai inserito il cognome");
+
+        if (!empty($_codiceFiscale)) {
+            $this->codiceFiscale = $_codiceFiscale;
+        }else {
+            throw new Exception("Non hai inserito il codice fiscale");
         }
-        $this->cognome = $_cognome;
-        if (empty($_codiceFiscale)) {
-            die("Non hai inserito il CF");        }
-        $this->codiceFiscale = $_codiceFiscale;
-        if (empty($_matricola)) {
-            die("Non hai inserito la matricola");
+
+        if (!empty($_matricola)) {
+            $this->matricola = $_matricola;
+        }else {
+            throw new Exception("Non hai la matricola");
         }
-        if (!is_numeric($_matricola)) {
-            die("Non hai inserito un valore numerico nella matricola");
+
+        if (is_numeric($_matricola)) {
+            $this->matricola = $_matricola;
+        }else {
+            throw new Exception("Non hai inserito correttamente la matricola, deve essere un numero");
         }
-        $this->matricola = $_matricola;
-        if (empty($_stipendioAnnuoLordo)) {
-            die("Non hai inserito lo stipendio annuale");
+
+        if (!empty($_stipendioAnnuoLordo)) {
+            $this->stipendioAnnuoLordo = $_stipendioAnnuoLordo;
+        }else {
+            throw new Exception("Non hai inserito lo stipendio annuale");
         }
-        if (!is_numeric($_stipendioAnnuoLordo)) {
-            die("Non hai inserito un valore numerico nello stipendio annuale");
+
+        if (is_numeric($_stipendioAnnuoLordo)) {
+            $this->stipendioAnnuoLordo = $_stipendioAnnuoLordo;
+        }else {
+            throw new Exception("Non hai inserito lo stipendio annuale come valore numerico");
         }
-        $this->stipendioAnnuoLordo = $_stipendioAnnuoLordo;
     }
 
+
     public function calcolaMensile(){
-        if (empty($this->stipendioAnnuoLordo)) {
-            die("Non hai inserito lo stipendio annuale");
+
+        if (!empty($this->stipendioAnnuoLordo)) {
+            return round($this->stipendioAnnuoLordo / 12,2);
+        } else {
+            throw new Exception("Non hai inserito lo stipendio annuale");
         }
-        return round($this->stipendioAnnuoLordo / 12,2);
+
     }
 
 }
